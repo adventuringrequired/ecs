@@ -49,6 +49,11 @@ namespace AdventuringRequired.ECS
             systems.Add(system);
         }
 
+        public void AddSystems(params ECSSystem[] systemsToAdd)
+        {
+            systems.AddRange(systemsToAdd);
+        }
+
         public List<ECSEntity> Select<T>()
             where T : ECSComponent
         {

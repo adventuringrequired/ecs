@@ -24,12 +24,14 @@ public class Simulation : MonoBehaviour
 
     void Awake()
     {
-        world.AddSystem(new AgingSystem());
-        world.AddSystem(new DeathSystem(deathAge));
-        world.AddSystem(new UpdateRenderColorFromAgeSystem(deathAge));
-        world.AddSystem(new RenderSystem(sprite));
-        world.AddSystem(new MovementSystem());
-        world.AddSystem(new NewPopulationSystem());
+        world.AddSystems(
+            new AgingSystem(),
+            new DeathSystem(deathAge),
+            new UpdateRenderColorFromAgeSystem(deathAge),
+            new RenderSystem(sprite),
+            new MovementSystem(),
+            new NewPopulationSystem()
+        );
     }
 
     void Start()
