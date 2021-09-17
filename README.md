@@ -1,6 +1,6 @@
 # ECS
 
-An example ECS implementation in C# integrated with Unity.
+An example ECS ([Entity Component System](https://en.wikipedia.org/wiki/Entity_component_system)) implementation in C# integrated with Unity.
 
 ## Built With
 
