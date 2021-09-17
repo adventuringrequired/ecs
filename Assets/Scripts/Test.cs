@@ -24,22 +24,16 @@ public class Test : MonoBehaviour
         world.AddSystem(new DeathSystem());
         world.AddSystem(new UpdateRenderColorFromAgeSystem());
         world.AddSystem(new RenderSystem(sprite));
-
-
+        world.AddSystem(new MovementSystem());
     }
 
     void Start()
     {
         for (int i = 0; i < population; i++)
         {
-            double range = (double)float.MaxValue - (double)float.MinValue;
-            double sample = rnd.NextDouble();
-            double scaled = (sample * range) + float.MinValue;
-            float ageRate = (float)scaled;
-
             world.AddEntity(
-                new Being { Name = $"Being {i}", Age = rnd.Next(0, 95), AgeRate = ageRate },
-                new Renderable { Position = UnityEngine.Random.insideUnitCircle * 40f }
+                new Being { Name = $"Being {i}", Age = rnd.Next(0, 95) },
+                new Renderable { Position = UnityEngine.Random.insideUnitCircle * 5f }
             );
         }
     }
@@ -64,13 +58,9 @@ public class Test : MonoBehaviour
         [SerializeField]
         private float health;
 
-        [SerializeField]
-        private float ageRate = 1f;
-
         public string Name { get => name; set => name = value; }
         public float Age { get => age; set => age = value; }
         public float Health { get => health; set => health = value; }
-        public float AgeRate { get => ageRate; set => ageRate = value; }
     }
 
     [Serializable]
@@ -197,6 +187,32 @@ public class Test : MonoBehaviour
                 {
                     spriteRender.color = renderable.Color;
                 }
+            }
+        }
+    }
+
+    [SerializeField]
+    private class MovementSystem : ECSSystem
+    {
+        public override void FixedUpdate(ECSWorld world)
+        {
+        }
+
+        public override void Start(ECSWorld world)
+        {
+        }
+
+        public override void Update(ECSWorld world)
+        {
+            List<ECSEntity> entities = world.Select<Renderable>();
+
+            foreach (var entity in entities)
+            {
+                var renderable = entity.GetComponent<Renderable>();
+
+
+
+                renderable.Position = Vector2.Lerp(renderable.Position, renderable.Position + UnityEngine.Random.insideUnitCircle, Time.deltaTime * 25);
             }
         }
     }
