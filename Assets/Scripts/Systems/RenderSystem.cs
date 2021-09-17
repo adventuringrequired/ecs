@@ -29,6 +29,7 @@ public class RenderSystem : ECSSystem
                 world.CacheGameObject(entity, gameObject);
 
                 var spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+                spriteRenderer.sortingOrder = spriteCache.Count;
                 spriteCache.Add(gameObject, spriteRenderer);
 
                 spriteRenderer.sprite = sprite;

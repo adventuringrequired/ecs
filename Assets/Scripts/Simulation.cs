@@ -28,7 +28,7 @@ public class Simulation : MonoBehaviour
             new DeathSystem(deathAge),
             new UpdateRenderColorFromAgeSystem(deathAge),
             new RenderSystem(sprite),
-            new MovementSystem(),
+            new MovementSystem(deathAge),
             new NewPopulationSystem()
         );
     }
