@@ -20,11 +20,10 @@ public class Simulation : MonoBehaviour
     [SerializeField]
     private Sprite sprite;
 
-    private System.Random rnd = new System.Random();
-
     void Awake()
     {
         world.AddSystems(
+            new SeedPopulationSystem(population, startingRadius, deathAge),
             new AgingSystem(),
             new DeathSystem(deathAge),
             new UpdateRenderColorFromAgeSystem(deathAge),
@@ -32,16 +31,5 @@ public class Simulation : MonoBehaviour
             new MovementSystem(),
             new NewPopulationSystem()
         );
-    }
-
-    void Start()
-    {
-        for (int i = 0; i < population; i++)
-        {
-            world.AddEntity(
-                new Being { Name = $"Being {i}", Age = rnd.Next(0, Mathf.RoundToInt(deathAge)) },
-                new Renderable { Position = UnityEngine.Random.insideUnitCircle * startingRadius }
-            );
-        }
     }
 }
