@@ -10,25 +10,46 @@ public class Test : MonoBehaviour
     private ECSWorld world;
 
     [SerializeField]
+    [Range(1, 10000)]
+    private int population;
+
+    [SerializeField]
     private Sprite sprite;
+
+    private System.Random rnd = new System.Random();
 
     void Awake()
     {
-        world.AddSystem(new GreetingSystem());
         world.AddSystem(new AgingSystem());
         world.AddSystem(new DeathSystem());
         world.AddSystem(new UpdateRenderColorFromAgeSystem());
         world.AddSystem(new RenderSystem(sprite));
 
-        world.AddEntity(
-            new Being { Name = "Test Person", Age = 3 },
-            new Renderable { Color = Color.cyan }
-        );
 
-        world.AddEntity(
-            new Being { Name = "Test Person 2", Age = 1 },
-            new Renderable { Color = Color.green, Position = new Vector2(5f, 5f) }
-        );
+    }
+
+    void Start()
+    {
+        for (int i = 0; i < population; i++)
+        {
+            double range = (double)float.MaxValue - (double)float.MinValue;
+            double sample = rnd.NextDouble();
+            double scaled = (sample * range) + float.MinValue;
+            float ageRate = (float)scaled;
+
+            world.AddEntity(
+                new Being { Name = $"Being {i}", Age = rnd.Next(0, 95), AgeRate = ageRate },
+                new Renderable { Position = UnityEngine.Random.insideUnitCircle * 40f }
+            );
+        }
+    }
+
+    static float NextFloat(System.Random random)
+    {
+        double mantissa = (random.NextDouble() * 2.0) - 1.0;
+        // choose -149 instead of -126 to also generate subnormal floats (*)
+        double exponent = Math.Pow(2.0, random.Next(-126, 128));
+        return (float)(mantissa * exponent);
     }
 
     [Serializable]
@@ -43,9 +64,13 @@ public class Test : MonoBehaviour
         [SerializeField]
         private float health;
 
+        [SerializeField]
+        private float ageRate = 1f;
+
         public string Name { get => name; set => name = value; }
         public float Age { get => age; set => age = value; }
         public float Health { get => health; set => health = value; }
+        public float AgeRate { get => ageRate; set => ageRate = value; }
     }
 
     [Serializable]
@@ -63,25 +88,6 @@ public class Test : MonoBehaviour
         public Vector2 Position { get => position; set => position = value; }
         public Color Color { get => color; set => color = value; }
         public Vector2 Size { get => size; set => size = value; }
-    }
-
-    [Serializable]
-    private class GreetingSystem : ECSSystem
-    {
-        public override void Start(ECSWorld world)
-        {
-            List<ECSEntity> entities = world.Select<Being>();
-
-            foreach (var entity in entities)
-            {
-                var being = entity.GetComponent<Being>();
-                Debug.Log($"Hello, {being.Name}");
-            }
-        }
-
-        public override void FixedUpdate(ECSWorld world) { }
-
-        public override void Update(ECSWorld world) { }
     }
 
     [Serializable]
@@ -118,9 +124,8 @@ public class Test : MonoBehaviour
             {
                 var being = entity.GetComponent<Being>();
 
-                if (being.Age > 100f)
+                if (being.Age >= 100f)
                 {
-                    Debug.Log($"Being {being.Name} has passed");
                     world.RemoveEntity(entity);
                 }
             }
