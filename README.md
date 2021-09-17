@@ -9,9 +9,9 @@ An example ECS ([Entity Component System](https://en.wikipedia.org/wiki/Entity_c
 ## Getting Started
 
 - [ECS](Assets/ECS) Start here
-- [Simulation](Assets/Scripts/Simulation.cs)
-- [Components](Assets/Scripts/Components)
-- [Systems](Assets/Scripts/Systems)
+- [Simulation](Assets/Scripts/Simulation/Simulation.cs)
+- [Components](Assets/Scripts/Simulation/Components)
+- [Systems](Assets/Scripts/Simulation/Systems)
 
 ## Demo
 
