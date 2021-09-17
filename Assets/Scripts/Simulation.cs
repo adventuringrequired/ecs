@@ -1,17 +1,23 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AdventuringRequired.ECS;
 
-public class Test : MonoBehaviour
+public class Simulation : MonoBehaviour
 {
     [SerializeField]
     private ECSWorld world;
 
     [SerializeField]
-    [Range(1, 10000)]
-    private int population;
+    [Range(1, 25000)]
+    private int population = 2500;
+
+    [SerializeField]
+    private float deathAge = 60f;
+
+    [SerializeField]
+    [Range(1f, 50f)]
+    private float startingRadius = 10f;
 
     [SerializeField]
     private Sprite sprite;
@@ -21,8 +27,8 @@ public class Test : MonoBehaviour
     void Awake()
     {
         world.AddSystem(new AgingSystem());
-        world.AddSystem(new DeathSystem());
-        world.AddSystem(new UpdateRenderColorFromAgeSystem());
+        world.AddSystem(new DeathSystem(deathAge));
+        world.AddSystem(new UpdateRenderColorFromAgeSystem(deathAge));
         world.AddSystem(new RenderSystem(sprite));
         world.AddSystem(new MovementSystem());
     }
@@ -32,8 +38,8 @@ public class Test : MonoBehaviour
         for (int i = 0; i < population; i++)
         {
             world.AddEntity(
-                new Being { Name = $"Being {i}", Age = rnd.Next(0, 95) },
-                new Renderable { Position = UnityEngine.Random.insideUnitCircle * 5f }
+                new Being { Name = $"Being {i}", Age = rnd.Next(0, Mathf.RoundToInt(deathAge)) },
+                new Renderable { Position = UnityEngine.Random.insideUnitCircle * startingRadius }
             );
         }
     }
@@ -102,6 +108,13 @@ public class Test : MonoBehaviour
     [Serializable]
     private class DeathSystem : ECSSystem
     {
+        private float deathAge;
+
+        public DeathSystem(float deathAge)
+        {
+            this.deathAge = deathAge;
+        }
+
         public override void Start(ECSWorld world) { }
 
         public override void FixedUpdate(ECSWorld world) { }
@@ -114,7 +127,7 @@ public class Test : MonoBehaviour
             {
                 var being = entity.GetComponent<Being>();
 
-                if (being.Age >= 100f)
+                if (being.Age >= deathAge)
                 {
                     world.RemoveEntity(entity);
                 }
@@ -125,6 +138,13 @@ public class Test : MonoBehaviour
     [Serializable]
     private class UpdateRenderColorFromAgeSystem : ECSSystem
     {
+        private float deathAge;
+
+        public UpdateRenderColorFromAgeSystem(float deathAge)
+        {
+            this.deathAge = deathAge;
+        }
+
         public override void Start(ECSWorld world) { }
 
         public override void FixedUpdate(ECSWorld world) { }
@@ -138,7 +158,7 @@ public class Test : MonoBehaviour
                 var being = entity.GetComponent<Being>();
                 var renderable = entity.GetComponent<Renderable>();
 
-                renderable.Color = Color.Lerp(Color.green, Color.red, being.Age / 100);
+                renderable.Color = Color.Lerp(Color.green, Color.red, being.Age / deathAge);
             }
         }
     }
