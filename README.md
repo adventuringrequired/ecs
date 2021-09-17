@@ -12,3 +12,14 @@ An example ECS ([Entity Component System](https://en.wikipedia.org/wiki/Entity_c
 - [Simulation](Assets/Scripts/Simulation.cs)
 - [Components](Assets/Scripts/Components)
 - [Systems](Assets/Scripts/Systems)
+
+## Demo
+
+https://adventuringrequired.github.io/ecs/
+
+### Simulation Settings
+
+| Setting    | Value |
+| ---------- | ----- |
+| Population | 2500  |
+| Death Age  | 60    |
