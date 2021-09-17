@@ -13,10 +13,6 @@ public class UpdateRenderColorFromAgeSystem : ECSSystem
         this.deathAge = deathAge;
     }
 
-    public override void Start(ECSWorld world) { }
-
-    public override void FixedUpdate(ECSWorld world) { }
-
     public override void Update(ECSWorld world)
     {
         List<ECSEntity> entities = world.Select<Being, Renderable>();

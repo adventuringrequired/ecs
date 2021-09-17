@@ -18,11 +18,6 @@ public class SeedPopulationSystem : ECSSystem
         this.deathAge = deathAge;
     }
 
-    public override void FixedUpdate(ECSWorld world)
-    {
-
-    }
-
     public override void Start(ECSWorld world)
     {
         for (int i = 0; i < population; i++)
@@ -32,10 +27,5 @@ public class SeedPopulationSystem : ECSSystem
                 new Renderable { Position = UnityEngine.Random.insideUnitCircle * radius }
             );
         }
-    }
-
-    public override void Update(ECSWorld world)
-    {
-
     }
 }
