@@ -25,11 +25,14 @@ public class NewPopulationSystem : ECSSystem
 
     IEnumerator SpawnNewPopulation()
     {
-        world.AddEntity(
-            new Being { Name = $"Being", Age = 0 },
-            new Renderable { Position = UnityEngine.Random.insideUnitCircle }
-        );
+        while (true)
+        {
+            world.AddEntity(
+                new Being { Name = $"Being", Age = 0 },
+                new Renderable { Position = Vector2.zero }
+            );
 
-        yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f);
+        }
     }
 }
