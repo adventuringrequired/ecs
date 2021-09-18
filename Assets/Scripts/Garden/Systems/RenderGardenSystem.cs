@@ -7,14 +7,14 @@ namespace Simulations.Garden
     {
         public override void Update(ECSWorld world)
         {
-            var entities = world.Select<Plant, Position, SpriteRender, GameObjectReference>();
+            var matches = world.Select<Plant, Position, SpriteRender, GameObjectReference>();
 
-            foreach (var entity in entities)
+            foreach (var match in matches)
             {
-                var plant = entity.GetComponent<Plant>();
-                var position = entity.GetComponent<Position>();
-                var spriteRender = entity.GetComponent<SpriteRender>();
-                var gameObjectReference = entity.GetComponent<GameObjectReference>();
+                var plant = match.Item2.Item1;
+                var position = match.Item2.Item2;
+                var spriteRender = match.Item2.Item3;
+                var gameObjectReference = match.Item2.Item4;
 
                 var gameObject = gameObjectReference.gameObject;
                 var plantObject = plant.PlantObject;

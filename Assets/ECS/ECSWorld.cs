@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -54,66 +55,46 @@ namespace AdventuringRequired.ECS
             systems.AddRange(systemsToAdd);
         }
 
-        public List<ECSEntity> Select<T>()
+        public List<Tuple<ECSEntity, Tuple<T>>> Select<T>()
             where T : ECSComponent
         {
-            return entities.Select(e =>
-            {
-                if (e.HasComponent<T>())
-                {
-                    return e;
-                }
-
-                return null;
-            }).ToList();
+            return entities
+                .Where(e => e.HasComponent<T>())
+                .Select(e => Tuple.Create(e, Tuple.Create(e.GetComponent<T>())))
+                .ToList();
         }
 
-        public List<ECSEntity> Select<T, T2>()
+        public List<Tuple<ECSEntity, Tuple<T, T2>>> Select<T, T2>()
             where T : ECSComponent
             where T2 : ECSComponent
         {
-            return entities.Select(e =>
-            {
-                if (e.HasComponent<T>() && e.HasComponent<T2>())
-                {
-                    return e;
-                }
-
-                return null;
-            }).ToList();
+            return entities
+                .Where(e => e.HasComponent<T>() && e.HasComponent<T2>())
+                .Select(e => Tuple.Create(e, Tuple.Create(e.GetComponent<T>(), e.GetComponent<T2>())))
+                .ToList();
         }
 
-        public List<ECSEntity> Select<T, T2, T3>()
+        public List<Tuple<ECSEntity, Tuple<T, T2, T3>>> Select<T, T2, T3>()
             where T : ECSComponent
             where T2 : ECSComponent
             where T3 : ECSComponent
         {
-            return entities.Select(e =>
-            {
-                if (e.HasComponent<T>() && e.HasComponent<T2>() && e.HasComponent<T3>())
-                {
-                    return e;
-                }
-
-                return null;
-            }).ToList();
+            return entities
+                .Where(e => e.HasComponent<T>() && e.HasComponent<T2>() && e.HasComponent<T3>())
+                .Select(e => Tuple.Create(e, Tuple.Create(e.GetComponent<T>(), e.GetComponent<T2>(), e.GetComponent<T3>())))
+                .ToList();
         }
 
-        public List<ECSEntity> Select<T, T2, T3, T4>()
+        public List<Tuple<ECSEntity, Tuple<T, T2, T3, T4>>> Select<T, T2, T3, T4>()
             where T : ECSComponent
             where T2 : ECSComponent
             where T3 : ECSComponent
             where T4 : ECSComponent
         {
-            return entities.Select(e =>
-            {
-                if (e.HasComponent<T>() && e.HasComponent<T2>() && e.HasComponent<T3>() && e.HasComponent<T4>())
-                {
-                    return e;
-                }
-
-                return null;
-            }).ToList();
+            return entities
+                .Where(e => e.HasComponent<T>() && e.HasComponent<T2>() && e.HasComponent<T3>() && e.HasComponent<T4>())
+                .Select(e => Tuple.Create(e, Tuple.Create(e.GetComponent<T>(), e.GetComponent<T2>(), e.GetComponent<T3>(), e.GetComponent<T4>())))
+                .ToList();
         }
 
         void Start()

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using AdventuringRequired.ECS;
 
 namespace Simulations.Garden
@@ -9,11 +7,11 @@ namespace Simulations.Garden
     {
         public override void Update(ECSWorld world)
         {
-            var entities = world.Select<Plant>();
+            var matches = world.Select<Plant>();
 
-            foreach (var entity in entities)
+            foreach (var match in matches)
             {
-                var plant = entity.GetComponent<Plant>();
+                var plant = match.Item2.Item1;
 
                 plant.GrowTime += Time.deltaTime;
             }

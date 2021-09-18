@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using AdventuringRequired.ECS;
 
@@ -8,11 +7,11 @@ public class AgingSystem : ECSSystem
 {
     public override void Update(ECSWorld world)
     {
-        List<ECSEntity> entities = world.Select<Being>();
+        var matches = world.Select<Being>();
 
-        foreach (var entity in entities)
+        foreach (var match in matches)
         {
-            var being = entity.GetComponent<Being>();
+            var being = match.Item2.Item1;
             being.Age += Time.deltaTime;
         }
     }

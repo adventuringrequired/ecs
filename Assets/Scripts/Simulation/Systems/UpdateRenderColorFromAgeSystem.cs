@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using AdventuringRequired.ECS;
 
@@ -15,12 +14,12 @@ public class UpdateRenderColorFromAgeSystem : ECSSystem
 
     public override void Update(ECSWorld world)
     {
-        List<ECSEntity> entities = world.Select<Being, Renderable>();
+        var matches = world.Select<Being, Renderable>();
 
-        foreach (var entity in entities)
+        foreach (var match in matches)
         {
-            var being = entity.GetComponent<Being>();
-            var renderable = entity.GetComponent<Renderable>();
+            var being = match.Item2.Item1;
+            var renderable = match.Item2.Item2;
 
             renderable.Color = Color.Lerp(Color.green, Color.red, being.Age / deathAge);
         }

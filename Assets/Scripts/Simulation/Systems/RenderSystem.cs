@@ -17,11 +17,13 @@ public class RenderSystem : ECSSystem
 
     public override void Update(ECSWorld world)
     {
-        List<ECSEntity> entities = world.Select<Renderable>();
+        var matches = world.Select<Renderable>();
 
-        foreach (var entity in entities)
+        foreach (var match in matches)
         {
             GameObject gameObject;
+
+            var entity = match.Item1;
 
             if (!world.TryGetCacheGameObject(entity, out gameObject))
             {
@@ -35,7 +37,7 @@ public class RenderSystem : ECSSystem
                 spriteRenderer.sprite = sprite;
             }
 
-            var renderable = entity.GetComponent<Renderable>();
+            var renderable = match.Item2.Item1;
 
             gameObject.transform.position = renderable.Position;
             gameObject.transform.localScale = renderable.Size;

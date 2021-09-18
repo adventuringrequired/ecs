@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using AdventuringRequired.ECS;
 
@@ -11,13 +10,15 @@ namespace Simulations.Garden
 
         public override void Update(ECSWorld world)
         {
-            List<ECSEntity> entities = world.Select<GameObjectReference>();
+            var matches = world.Select<GameObjectReference>();
 
-            foreach (var entity in entities)
+            foreach (var match in matches)
             {
+                var entity = match.Item1;
+
                 if (cache.ContainsKey(entity)) continue;
 
-                var gameObjectReference = entity.GetComponent<GameObjectReference>();
+                var gameObjectReference = match.Item2.Item1;
 
                 GameObject gameObject = new GameObject();
                 cache.Add(entity, gameObject);

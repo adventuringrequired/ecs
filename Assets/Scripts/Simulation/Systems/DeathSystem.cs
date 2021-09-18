@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using AdventuringRequired.ECS;
 
 [Serializable]
@@ -14,11 +13,12 @@ public class DeathSystem : ECSSystem
 
     public override void Update(ECSWorld world)
     {
-        List<ECSEntity> entities = world.Select<Being, Renderable>();
+        var matches = world.Select<Being, Renderable>();
 
-        foreach (var entity in entities)
+        foreach (var match in matches)
         {
-            var being = entity.GetComponent<Being>();
+            var entity = match.Item1;
+            var being = match.Item2.Item1;
 
             if (being.Age >= deathAge)
             {

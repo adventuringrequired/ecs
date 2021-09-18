@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using AdventuringRequired.ECS;
 
 [SerializeField]
@@ -14,12 +13,12 @@ public class MovementSystem : ECSSystem
 
     public override void Update(ECSWorld world)
     {
-        List<ECSEntity> entities = world.Select<Renderable, Being>();
+        var matches = world.Select<Renderable, Being>();
 
-        foreach (var entity in entities)
+        foreach (var match in matches)
         {
-            var renderable = entity.GetComponent<Renderable>();
-            var being = entity.GetComponent<Being>();
+            var renderable = match.Item2.Item1;
+            var being = match.Item2.Item2;
 
             renderable.Position = Vector2.Lerp(renderable.Position, renderable.Position + UnityEngine.Random.insideUnitCircle, Time.deltaTime * 25 * (1 - (being.Age / deathAge)));
         }

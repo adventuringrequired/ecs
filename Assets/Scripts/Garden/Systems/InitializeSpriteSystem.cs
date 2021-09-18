@@ -17,12 +17,12 @@ namespace Simulations.Garden
 
         public override void Update(ECSWorld world)
         {
-            List<ECSEntity> entities = world.Select<SpriteRender, GameObjectReference>();
+            var matches = world.Select<SpriteRender, GameObjectReference>();
 
-            foreach (var entity in entities)
+            foreach (var match in matches)
             {
-                var spriteRender = entity.GetComponent<SpriteRender>();
-                var gameObjectReference = entity.GetComponent<GameObjectReference>();
+                var spriteRender = match.Item2.Item1;
+                var gameObjectReference = match.Item2.Item2;
 
                 if (!spriteCache.ContainsKey(gameObjectReference.gameObject))
                 {
