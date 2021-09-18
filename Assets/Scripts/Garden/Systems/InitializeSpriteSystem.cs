@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using AdventuringRequired.ECS;
 
@@ -17,26 +18,25 @@ namespace Simulations.Garden
 
         public override void Update(ECSWorld world)
         {
-            var matches = world.Select<SpriteRender, GameObjectReference>();
-
-            foreach (var match in matches)
+            world.Select<SpriteRender, GameObjectReference>().ForEach(match =>
             {
-                var spriteRender = match.Item2.Item1;
-                var gameObjectReference = match.Item2.Item2;
+                var (_, (spriteRender, gameObjectReference)) = match;
 
-                if (!spriteCache.ContainsKey(gameObjectReference.gameObject))
+                var gameObject = gameObjectReference.gameObject;
+
+                if (!spriteCache.ContainsKey(gameObject))
                 {
-                    var renderer = gameObjectReference.gameObject.AddComponent<SpriteRenderer>();
-                    spriteCache.Add(gameObjectReference.gameObject, renderer);
+                    var renderer = gameObject.AddComponent<SpriteRenderer>();
+                    spriteCache.Add(gameObject, renderer);
                     renderer.sprite = sprite;
                     renderer.color = spriteRender.Color;
                 }
 
-                if (spriteCache.TryGetValue(gameObjectReference.gameObject, out var spriteRenderer))
+                if (spriteCache.TryGetValue(gameObject, out var spriteRenderer))
                 {
                     spriteRenderer.color = spriteRender.Color;
                 }
-            }
+            });
         }
     }
 

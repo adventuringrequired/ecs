@@ -13,17 +13,15 @@ public class DeathSystem : ECSSystem
 
     public override void Update(ECSWorld world)
     {
-        var matches = world.Select<Being, Renderable>();
-
-        foreach (var match in matches)
+        world.Select<Being>().ForEach(match =>
         {
-            var entity = match.Item1;
-            var being = match.Item2.Item1;
+            var (entity, components) = match;
+            var being = components.Item1;
 
             if (being.Age >= deathAge)
             {
                 world.RemoveEntity(entity);
             }
-        }
+        });
     }
 }

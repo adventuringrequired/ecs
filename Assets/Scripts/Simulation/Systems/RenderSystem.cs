@@ -17,13 +17,12 @@ public class RenderSystem : ECSSystem
 
     public override void Update(ECSWorld world)
     {
-        var matches = world.Select<Renderable>();
-
-        foreach (var match in matches)
+        world.Select<Renderable>().ForEach(match =>
         {
-            GameObject gameObject;
+            var (entity, components) = match;
+            var renderable = components.Item1;
 
-            var entity = match.Item1;
+            GameObject gameObject;
 
             if (!world.TryGetCacheGameObject(entity, out gameObject))
             {
@@ -37,8 +36,6 @@ public class RenderSystem : ECSSystem
                 spriteRenderer.sprite = sprite;
             }
 
-            var renderable = match.Item2.Item1;
-
             gameObject.transform.position = renderable.Position;
             gameObject.transform.localScale = renderable.Size;
 
@@ -46,6 +43,6 @@ public class RenderSystem : ECSSystem
             {
                 spriteRender.color = renderable.Color;
             }
-        }
+        });
     }
 }

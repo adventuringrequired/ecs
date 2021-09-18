@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using AdventuringRequired.ECS;
 
@@ -10,26 +11,23 @@ namespace Simulations.Garden
 
         public override void Update(ECSWorld world)
         {
-            var matches = world.Select<GameObjectReference>();
-
-            foreach (var match in matches)
+            world.Select<GameObjectReference>().ForEach(match =>
             {
-                var entity = match.Item1;
+                var (entity, components) = match;
 
-                if (cache.ContainsKey(entity)) continue;
-
-                var gameObjectReference = match.Item2.Item1;
+                if (cache.ContainsKey(entity)) return;
 
                 GameObject gameObject = new GameObject();
                 cache.Add(entity, gameObject);
 
+                var gameObjectReference = components.Item1;
                 gameObjectReference.gameObject = gameObject;
 
                 if (gameObjectReference.name != null)
                 {
                     gameObject.name = gameObjectReference.name;
                 }
-            }
+            });
         }
     }
 

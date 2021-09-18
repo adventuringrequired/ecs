@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using AdventuringRequired.ECS;
 
 namespace Simulations.Garden
@@ -7,14 +8,13 @@ namespace Simulations.Garden
     {
         public override void Update(ECSWorld world)
         {
-            var matches = world.Select<Plant>();
-
-            foreach (var match in matches)
+            world.Select<Plant>().ForEach(match =>
             {
-                var plant = match.Item2.Item1;
+                var (_, components) = match;
+                var plant = components.Item1;
 
                 plant.GrowTime += Time.deltaTime;
-            }
+            });
         }
     }
 }
