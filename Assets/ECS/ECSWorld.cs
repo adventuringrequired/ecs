@@ -83,6 +83,39 @@ namespace AdventuringRequired.ECS
             }).ToList();
         }
 
+        public List<ECSEntity> Select<T, T2, T3>()
+            where T : ECSComponent
+            where T2 : ECSComponent
+            where T3 : ECSComponent
+        {
+            return entities.Select(e =>
+            {
+                if (e.HasComponent<T>() && e.HasComponent<T2>() && e.HasComponent<T3>())
+                {
+                    return e;
+                }
+
+                return null;
+            }).ToList();
+        }
+
+        public List<ECSEntity> Select<T, T2, T3, T4>()
+            where T : ECSComponent
+            where T2 : ECSComponent
+            where T3 : ECSComponent
+            where T4 : ECSComponent
+        {
+            return entities.Select(e =>
+            {
+                if (e.HasComponent<T>() && e.HasComponent<T2>() && e.HasComponent<T3>() && e.HasComponent<T4>())
+                {
+                    return e;
+                }
+
+                return null;
+            }).ToList();
+        }
+
         void Start()
         {
             foreach (var system in systems)
