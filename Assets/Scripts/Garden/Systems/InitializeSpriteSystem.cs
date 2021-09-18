@@ -4,13 +4,13 @@ using AdventuringRequired.ECS;
 
 namespace Simulations.Garden
 {
-    public class InitializeSpriteSystem : ECSSystem
+    public class AllocateSprites : ECSSystem
     {
         private Dictionary<GameObject, SpriteRenderer> spriteCache = new Dictionary<GameObject, SpriteRenderer>();
 
         private Sprite sprite;
 
-        public InitializeSpriteSystem(Sprite sprite)
+        public AllocateSprites(Sprite sprite)
         {
             this.sprite = sprite;
         }

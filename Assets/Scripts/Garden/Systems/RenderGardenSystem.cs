@@ -3,7 +3,7 @@ using AdventuringRequired.ECS;
 
 namespace Simulations.Garden
 {
-    public class RenderGardenSystem : ECSSystem
+    public class RenderGarden : ECSSystem
     {
         public override void Update(ECSWorld world)
         {

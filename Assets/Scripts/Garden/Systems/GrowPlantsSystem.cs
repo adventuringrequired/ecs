@@ -5,7 +5,7 @@ using AdventuringRequired.ECS;
 
 namespace Simulations.Garden
 {
-    public class GrowPlantsSystem : ECSSystem
+    public class GrowPlants : ECSSystem
     {
         public override void Update(ECSWorld world)
         {

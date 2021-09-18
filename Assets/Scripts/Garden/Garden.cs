@@ -24,11 +24,11 @@ namespace Simulations.Garden
         void Awake()
         {
             world.AddSystems(
-                new GameObjectAllocatorSystem(),
-                new InitializeSpriteSystem(sprite),
-                new GrowPlantsSystem(),
-                new RenderGardenSystem(),
-                new RandomPlantingSystem(plantObjects[0], plantingRadius, timeBetweenPlantings)
+                new AllocateGameObjects(),
+                new AllocateSprites(sprite),
+                new RenderGarden(),
+                new GrowPlants(),
+                new PlantRandomPlants(plantObjects[0], plantingRadius, timeBetweenPlantings)
             );
         }
     }

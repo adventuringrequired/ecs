@@ -5,7 +5,7 @@ using AdventuringRequired.ECS;
 
 namespace Simulations.Garden
 {
-    public class GameObjectAllocatorSystem : ECSSystem
+    public class AllocateGameObjects : ECSSystem
     {
         private Dictionary<ECSEntity, GameObject> cache = new Dictionary<ECSEntity, GameObject>();
 

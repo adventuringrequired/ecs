@@ -4,7 +4,7 @@ using AdventuringRequired.ECS;
 
 namespace Simulations.Garden
 {
-    public class RandomPlantingSystem : ECSSystem
+    public class PlantRandomPlants : ECSSystem
     {
         private ECSWorld world;
         private PlantObject plantObject;
@@ -13,7 +13,7 @@ namespace Simulations.Garden
 
         private float timeBetweenPlantings;
 
-        public RandomPlantingSystem(PlantObject plantObject, float plantingRadius, float timeBetweenPlantings)
+        public PlantRandomPlants(PlantObject plantObject, float plantingRadius, float timeBetweenPlantings)
         {
             this.plantObject = plantObject;
             this.plantingRadius = plantingRadius;
