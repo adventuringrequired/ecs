@@ -20,7 +20,7 @@ namespace Simulations.Garden
         {
             world.Select<SpriteRender, GameObjectReference>().ForEach(match =>
             {
-                var (_, (spriteRender, gameObjectReference)) = match;
+                var (_, spriteRender, gameObjectReference) = match;
 
                 var gameObject = gameObjectReference.gameObject;
 

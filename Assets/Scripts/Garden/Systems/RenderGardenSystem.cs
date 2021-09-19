@@ -10,7 +10,7 @@ namespace Simulations.Garden
         {
             world.Select<Plant, Position, SpriteRender, GameObjectReference>().ForEach(match =>
             {
-                var (_, (plant, position, spriteRender, gameObjectReference)) = match;
+                var (_, plant, position, spriteRender, gameObjectReference) = match;
 
                 var plantObject = plant.PlantObject;
 

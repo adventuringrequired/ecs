@@ -9,8 +9,7 @@ public class AgingSystem : ECSSystem
     {
         world.Select<Being>().ForEach(match =>
         {
-            var (_, components) = match;
-            var being = components.Item1;
+            var (_, being) = match;
 
             being.Age += Time.deltaTime;
         });

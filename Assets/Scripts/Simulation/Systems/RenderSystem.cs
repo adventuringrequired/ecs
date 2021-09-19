@@ -19,8 +19,7 @@ public class RenderSystem : ECSSystem
     {
         world.Select<Renderable>().ForEach(match =>
         {
-            var (entity, components) = match;
-            var renderable = components.Item1;
+            var (entity, renderable) = match;
 
             GameObject gameObject;
 

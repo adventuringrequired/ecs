@@ -16,7 +16,7 @@ public class MovementSystem : ECSSystem
     {
         world.Select<Being, Renderable>().ForEach(match =>
         {
-            var (_, (being, renderable)) = match;
+            var (_, being, renderable) = match;
 
             renderable.Position = Vector2.Lerp(
                 renderable.Position,

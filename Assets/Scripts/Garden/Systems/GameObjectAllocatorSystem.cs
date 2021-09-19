@@ -13,14 +13,13 @@ namespace Simulations.Garden
         {
             world.Select<GameObjectReference>().ForEach(match =>
             {
-                var (entity, components) = match;
+                var (entity, gameObjectReference) = match;
 
                 if (cache.ContainsKey(entity)) return;
 
                 GameObject gameObject = new GameObject();
                 cache.Add(entity, gameObject);
 
-                var gameObjectReference = components.Item1;
                 gameObjectReference.gameObject = gameObject;
 
                 if (gameObjectReference.name != null)

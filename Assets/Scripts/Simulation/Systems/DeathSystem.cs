@@ -15,8 +15,7 @@ public class DeathSystem : ECSSystem
     {
         world.Select<Being>().ForEach(match =>
         {
-            var (entity, components) = match;
-            var being = components.Item1;
+            var (entity, being) = match;
 
             if (being.Age >= deathAge)
             {

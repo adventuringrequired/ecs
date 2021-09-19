@@ -10,8 +10,7 @@ namespace Simulations.Garden
         {
             world.Select<Plant>().ForEach(match =>
             {
-                var (_, components) = match;
-                var plant = components.Item1;
+                var (_, plant) = match;
 
                 plant.GrowTime += Time.deltaTime;
             });
