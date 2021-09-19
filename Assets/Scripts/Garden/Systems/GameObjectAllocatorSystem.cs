@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using AdventuringRequired.ECS;
+using System.Linq;
 
 namespace Simulations.Garden
 {
@@ -11,22 +12,32 @@ namespace Simulations.Garden
 
         public override void Update(ECSWorld world)
         {
-            world.Select<GameObjectReference>().ForEach(match =>
+            IEnumerable<Tuple<ECSEntity, GameObjectReference>> matches = world.Select<GameObjectReference>();
+
+            Debug.Log($"AllocateGameObjects: entity matches {matches.Count()}");
+
+            var index = 0;
+
+            foreach (var (entity, gameObjectReference) in matches)
             {
-                var (entity, gameObjectReference) = match;
+                Debug.Log($"AllocateGameObjects: entity {index}: Checking...");
+                index++;
 
-                if (cache.ContainsKey(entity)) return;
+                if (gameObjectReference.gameObject != null)
+                {
+                    continue;
+                };
 
-                GameObject gameObject = new GameObject();
-                cache.Add(entity, gameObject);
+                Debug.Log($"AllocateGameObjects: entity {index}: Allocating game object");
 
-                gameObjectReference.gameObject = gameObject;
+                gameObjectReference.gameObject = new GameObject();
 
                 if (gameObjectReference.name != null)
                 {
-                    gameObject.name = gameObjectReference.name;
+                    gameObjectReference.gameObject.name = gameObjectReference.name;
                 }
-            });
+
+            }
         }
     }
 

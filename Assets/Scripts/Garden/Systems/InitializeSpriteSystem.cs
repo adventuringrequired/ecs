@@ -18,25 +18,16 @@ namespace Simulations.Garden
 
         public override void Update(ECSWorld world)
         {
-            world.Select<SpriteRender, GameObjectReference>().ForEach(match =>
+            foreach (var (_, spriteRender, gameObjectReference) in world.Select<SpriteRender, GameObjectReference>())
             {
-                var (_, spriteRender, gameObjectReference) = match;
-
-                var gameObject = gameObjectReference.gameObject;
-
-                if (!spriteCache.ContainsKey(gameObject))
+                if (spriteRender.SpriteRenderer == null)
                 {
-                    var renderer = gameObject.AddComponent<SpriteRenderer>();
-                    spriteCache.Add(gameObject, renderer);
-                    renderer.sprite = sprite;
-                    renderer.color = spriteRender.Color;
+                    spriteRender.SpriteRenderer = gameObjectReference.gameObject.AddComponent<SpriteRenderer>();
+                    spriteRender.SpriteRenderer.sprite = sprite;
                 }
 
-                if (spriteCache.TryGetValue(gameObject, out var spriteRenderer))
-                {
-                    spriteRenderer.color = spriteRender.Color;
-                }
-            });
+                spriteRender.SpriteRenderer.color = spriteRender.Color;
+            }
         }
     }
 

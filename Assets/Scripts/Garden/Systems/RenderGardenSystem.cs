@@ -8,21 +8,24 @@ namespace Simulations.Garden
     {
         public override void Update(ECSWorld world)
         {
-            world.Select<Plant, Position, SpriteRender, GameObjectReference>().ForEach(match =>
+            var index = 0;
+
+            foreach (var (_, plant, position, spriteRender, gameObjectReference) in world.Select<Plant, Position, SpriteRender, GameObjectReference>())
             {
-                var (_, plant, position, spriteRender, gameObjectReference) = match;
+                Debug.Log($"RenderGarden: entity {index}");
+                index++;
 
                 var plantObject = plant.PlantObject;
 
                 var percentDone = Mathf.Clamp01(plant.GrowTime / plantObject.TotalTimeToGrow);
 
-                var gameObject = gameObjectReference.gameObject;
-                gameObject.transform.position = position.position;
+                gameObjectReference.gameObject.transform.position = position.position;
                 var size = plantObject.FinalSize * percentDone;
-                gameObject.transform.localScale = new Vector3(size, size, 1f);
+                gameObjectReference.gameObject.transform.localScale = new Vector3(size, size, 1f);
 
                 spriteRender.Color = Color.Lerp(plantObject.StartColor, plantObject.FinalColor, percentDone);
-            });
+
+            }
         }
     }
 

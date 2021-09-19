@@ -17,10 +17,8 @@ public class RenderSystem : ECSSystem
 
     public override void Update(ECSWorld world)
     {
-        world.Select<Renderable>().ForEach(match =>
+        foreach (var (entity, renderable) in world.Select<Renderable>())
         {
-            var (entity, renderable) = match;
-
             GameObject gameObject;
 
             if (!world.TryGetCacheGameObject(entity, out gameObject))
@@ -42,6 +40,6 @@ public class RenderSystem : ECSSystem
             {
                 spriteRender.color = renderable.Color;
             }
-        });
+        }
     }
 }

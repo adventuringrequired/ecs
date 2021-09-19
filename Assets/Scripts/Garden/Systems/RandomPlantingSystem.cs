@@ -28,14 +28,20 @@ namespace Simulations.Garden
 
         IEnumerator RandomlyPlantPlants()
         {
+            var index = 0;
+
             while (true)
             {
+                Debug.Log($"PlantRandomPlants: RandomlyPlantPlants: entity {index}");
+                index++;
+
                 world.AddEntity(
                     new Plant { PlantObject = plantObject },
                     new Position { position = Random.insideUnitCircle * plantingRadius },
                     new GameObjectReference { name = plantObject.PlantName },
                     new SpriteRender()
                 );
+
 
                 yield return new WaitForSeconds(timeBetweenPlantings);
             }

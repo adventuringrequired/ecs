@@ -7,11 +7,9 @@ public class AgingSystem : ECSSystem
 {
     public override void Update(ECSWorld world)
     {
-        world.Select<Being>().ForEach(match =>
+        foreach (var (_, being) in world.Select<Being>())
         {
-            var (_, being) = match;
-
             being.Age += Time.deltaTime;
-        });
+        }
     }
 }

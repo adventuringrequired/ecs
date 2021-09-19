@@ -8,12 +8,10 @@ namespace Simulations.Garden
     {
         public override void Update(ECSWorld world)
         {
-            world.Select<Plant>().ForEach(match =>
+            foreach (var (_, plant) in world.Select<Plant>())
             {
-                var (_, plant) = match;
-
                 plant.GrowTime += Time.deltaTime;
-            });
+            }
         }
     }
 }
