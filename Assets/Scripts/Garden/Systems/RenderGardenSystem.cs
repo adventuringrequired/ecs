@@ -10,7 +10,7 @@ namespace Simulations.Garden
         {
             var index = 0;
 
-            foreach (var (_, plant, position, spriteRender, gameObjectReference) in world.Select<Plant, Position, SpriteRender, GameObjectReference>())
+            foreach (var (plant, position, spriteRender, gameObjectReference, _) in world.Select<Plant, Position, SpriteRender, GameObjectReference>())
             {
                 Debug.Log($"RenderGarden: entity {index}");
                 index++;

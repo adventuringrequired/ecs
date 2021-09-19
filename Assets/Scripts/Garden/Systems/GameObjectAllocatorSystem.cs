@@ -12,13 +12,13 @@ namespace Simulations.Garden
 
         public override void Update(ECSWorld world)
         {
-            IEnumerable<Tuple<ECSEntity, GameObjectReference>> matches = world.Select<GameObjectReference>();
+            var matches = world.Select<GameObjectReference>();
 
             Debug.Log($"AllocateGameObjects: entity matches {matches.Count()}");
 
             var index = 0;
 
-            foreach (var (entity, gameObjectReference) in matches)
+            foreach (var (gameObjectReference, entity) in matches)
             {
                 Debug.Log($"AllocateGameObjects: entity {index}: Checking...");
                 index++;

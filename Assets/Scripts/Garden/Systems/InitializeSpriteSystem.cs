@@ -18,7 +18,7 @@ namespace Simulations.Garden
 
         public override void Update(ECSWorld world)
         {
-            foreach (var (_, spriteRender, gameObjectReference) in world.Select<SpriteRender, GameObjectReference>())
+            foreach (var (spriteRender, gameObjectReference, _) in world.Select<SpriteRender, GameObjectReference>())
             {
                 if (spriteRender.SpriteRenderer == null)
                 {

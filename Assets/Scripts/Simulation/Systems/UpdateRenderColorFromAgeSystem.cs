@@ -14,7 +14,7 @@ public class UpdateRenderColorFromAgeSystem : ECSSystem
 
     public override void Update(ECSWorld world)
     {
-        foreach (var (_, being, renderable) in world.Select<Being, Renderable>())
+        foreach (var (being, renderable, _) in world.Select<Being, Renderable>())
         {
             renderable.Color = Color.Lerp(Color.green, Color.red, being.Age / deathAge);
         }

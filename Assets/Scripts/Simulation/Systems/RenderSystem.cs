@@ -17,7 +17,7 @@ public class RenderSystem : ECSSystem
 
     public override void Update(ECSWorld world)
     {
-        foreach (var (entity, renderable) in world.Select<Renderable>())
+        foreach (var (renderable, entity) in world.Select<Renderable>())
         {
             GameObject gameObject;
 

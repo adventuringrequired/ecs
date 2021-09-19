@@ -14,7 +14,7 @@ public class MovementSystem : ECSSystem
 
     public override void Update(ECSWorld world)
     {
-        foreach (var (_, being, renderable) in world.Select<Being, Renderable>())
+        foreach (var (being, renderable, _) in world.Select<Being, Renderable>())
         {
             renderable.Position = Vector2.Lerp(
                 renderable.Position,

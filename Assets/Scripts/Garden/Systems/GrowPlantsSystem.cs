@@ -8,7 +8,7 @@ namespace Simulations.Garden
     {
         public override void Update(ECSWorld world)
         {
-            foreach (var (_, plant) in world.Select<Plant>())
+            foreach (var (plant, _) in world.Select<Plant>())
             {
                 plant.GrowTime += Time.deltaTime;
             }
